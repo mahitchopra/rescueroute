@@ -51,11 +51,11 @@ Standard consumer GPS platforms (Google Maps, Waze) are **purely reactive**. Whe
 ## 🧠 Algorithmic & Mathematical Innovations
 
 ### 1. The 1000x Scaled Euclidean Heuristic
-To solve the O(V^2) bottleneck of uniform graph expansion, our engine uses the **A* Search Algorithm**, scoring nodes via:
+To solve the $O(V^2)$ bottleneck of uniform graph expansion, our engine uses the **A* Search Algorithm**, scoring nodes via:
 
-f(n) = g(n) + h(n)
+$$f(n) = g(n) + h(n)$$
 
-Where g(n) is the exact temporal cost from the start, and h(n) is our **Euclidean spatial heuristic**:
+Where $g(n)$ is the exact temporal cost from the start, and $h(n)$ is our **Euclidean spatial heuristic**:
 
     def heuristic(node: str, goal: str) -> float:
         x1, y1 = NODE_COORDS[node]
@@ -63,15 +63,15 @@ Where g(n) is the exact temporal cost from the start, and h(n) is our **Euclidea
         raw_euclidean = math.sqrt((x2 - x1)**2 + (y2 - y1)**2)
         return raw_euclidean * 1000.0  # Unit-mapping scalar
 
-* **The Architectural Justification:** The raw geographic coordinate distance across our city grid evaluates to roughly 0.007. Because our graph's edge weights represent travel time in integer minutes (e.g., 7), an unscaled heuristic would be mathematically swallowed by g(n), degrading A* back into a blind Dijkstra search. Applying a **1000x scalar** maps the geographic float directly onto the temporal integer scale, giving the heuristic its intended directional pull.
+* **The Architectural Justification:** The raw geographic coordinate distance across our city grid evaluates to roughly `0.007`. Because our graph's edge weights represent travel time in integer minutes (e.g., `7`), an unscaled heuristic would be mathematically swallowed by $g(n)$, degrading A* back into a blind Dijkstra search. Applying a **1000x scalar** maps the geographic float directly onto the temporal integer scale, giving the heuristic its intended directional pull.
 
 ### 2. Proactive Risk Penalties
 
 When the dashboard triggers the **Monsoon AI Guard**, the engine applies a mathematical quarantine to low-lying basins:
 
-w_effective = w_base * mu_traffic * (1 + R_predictive)
+$$w_{\text{effective}} = w_{\text{base}} \cdot \mu_{\text{traffic}} \cdot (1 + R_{\text{predictive}})$$
 
-By applying an immediate 5.0x weight penalty to vulnerable sectors, the engine treats the dry road as impassable, pre-emptively snapping the ambulance to an elevated Southern upland route entirely automatically.
+By applying an immediate `5.0x` weight penalty to vulnerable sectors, the engine treats the dry road as impassable, pre-emptively snapping the ambulance to an elevated Southern upland route entirely automatically.
 
 ---
 
