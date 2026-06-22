@@ -1,16 +1,48 @@
-# React + Vite
+# ⚡ RescueRoute: Intelligent Municipal Dispatch Engine
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> **Predictive spatial pathfinding and mid-transit dynamic rerouting built to protect the "Golden Hour" of trauma medicine.**
 
-Currently, two official plugins are available:
+![Vite](https://img.shields.io/badge/Vite-B73BFE?style=for-the-badge&logo=vite&logoColor=FFD62E)
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![FastAPI](https://img.shields.io/badge/fastapi-109989?style=for-the-badge&logo=FASTAPI&logoColor=white)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## 🛑 The Problem Statement 
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+In emergency trauma medicine, the **"Golden Hour"** dictates that a critically injured patient's chances of survival drop precipitously if they do not reach an operating table within 60 minutes. 
 
-## Expanding the ESLint configuration
+Standard consumer GPS platforms (Google Maps, Waze) are **purely reactive**. When a first responder encounters an unpredicted municipal hazard—such as a localized flash flood or a fallen power line—the vehicle must come to a complete stop, the driver must physically reverse, call dispatch, and wait for a client-side recalculation. **In an emergency, a 7-minute recalculation window is the difference between life and death.**
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 💡 The Solution
+
+**RescueRoute** transforms municipal dispatch from a *reactive tracking dashboard* into a **proactive, risk-weighted spatial matrix**. By decoupling the client-side view layer from a lightning-fast Python backend running an optimized **A* (A-Star) Spatial Engine**, the system achieves three core enterprise innovations:
+
+1. **Pre-emptive AI Hazard Quarantining:** The algorithm mathematically penalizes vulnerable road segments based on predictive weather triggers *before* a responder gets trapped in them.
+2. **Mid-Transit Telemetry Stitching:** If an emergency occurs mid-route, the engine recalculates a localized detour strictly from the vehicle's *active node*, preserving historical breadcrumbs without wiping the operational log.
+3. **Directed Heuristic Pathfinding:** Replacing standard 360-degree radial Dijkstra searches with Euclidean-directed vectoring to ensure sub-millisecond graph traversals at city scale.
+
+---
+
+## 🏛️ System Architecture
+
+```text
++-----------------------------------------------------------------+
+|                      REACT / VITE FRONTEND                      |
+|    (Leaflet DarkMatter + Pure CSS divIcons + Telemetry State)   |
++-----------------------------------------------------------------+
+                                 |
+           Asynchronous JSON POST (start, end, matrix_flags)
+                                 v
++-----------------------------------------------------------------+
+|                       FASTAPI REST ROUTER                       |
+|   (Uvicorn ASGI -> CORS Middleware -> Pydantic Type Validation) |
++-----------------------------------------------------------------+
+                                 |
+                 Passes sanitized graph tuple to:
+                                 v
++-----------------------------------------------------------------+
+|                    A* SPATIAL MATH ENGINE                       |
+|  (Heapq Priority Queue -> Euclidean Heuristic -> Path Stitcher) |
++-----------------------------------------------------------------+
